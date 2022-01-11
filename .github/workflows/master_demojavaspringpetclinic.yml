@@ -46,8 +46,15 @@ jobs:
         uses: Azure/login@v1
         with:
           # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-          # creds: ${{ secrets.AZURE_CREDENTIALS }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_41DC2C72EDA242B7A12B1404F65E1877 }}
+           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          # ClientId of the Azure Service principal created.
+           #client-id: # optional
+            # TenantId of the Azure Service principal created.
+           #tenant-id: # optional
+          # Azure subscriptionId
+           #subscription-id: # optional
+          # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
+           enable-AzPSSession: 'true'
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
