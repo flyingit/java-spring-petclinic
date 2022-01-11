@@ -28,14 +28,11 @@ jobs:
         java-version: ${{ env.JAVA_VERSION }}
     - name: Build with Maven
       run: mvn package --file pom.xml
-      
-    
     - uses: azure/login@v1
     - name: Login via Az module
       with:  
            creds: ${{secrets.AZURE_CREDENTIALS}}
-           enable-AzPSSession: true
-        
+           enable-AzPSSession: true   
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with: 
