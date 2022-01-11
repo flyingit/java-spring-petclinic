@@ -61,5 +61,5 @@ jobs:
         with:
           app-name: 'demojavaspringpetclinic'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_41DC2C72EDA242B7A12B1404F65E1877 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: '${{ github.workspace }}/target/*.war'
