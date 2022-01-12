@@ -47,10 +47,10 @@ jobs:
       - name: Sign in to Azure 
         uses: azure/login@v1
         with:
-         creds: ${{ secrets.AZURE_CREDENTIALS }}
+         creds: ${{ secrets.MYAZURE_CREDENTIALS }}
          enable-AzPSSession: 'true'
          allow-no-subscriptions: 'true'
-         environment: 'Production'
+         #environment: 'Production'
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
