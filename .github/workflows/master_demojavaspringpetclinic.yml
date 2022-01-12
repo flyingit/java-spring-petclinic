@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: 'demojavaspringpetclinic'
-          path: '${{ github.workspace }}/target/*.war'
+          path: '${{ github.workspace }}/target/demo.war'
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,4 +53,4 @@ jobs:
           app-name: 'demojavaspringpetclinic'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3BBC1DD7DDD44B6480993004351F078E }}
-          package: '*.war'
+          package: 'demo.war'
