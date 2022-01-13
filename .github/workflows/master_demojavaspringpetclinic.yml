@@ -1,6 +1,6 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
-# Final demo to swpneel
+# Final demo to tema members
 # for login cred- az ad sp create-for-rbac -n "MyApplast" --sdk-auth --role Contributor --scopes /subscriptions/(sub id>
 name: Build and deploy WAR app to Azure Web App - demojavaspringpetclinic
 
