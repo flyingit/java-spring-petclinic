@@ -1,0 +1,43 @@
+
+
+name: CI-CD for Prepaid-GPR-QA env  
+on:
+  push:
+    branches:
+      - main
+env:
+  ASC_PACKAGE_PATH: ${{ github.workspace }}
+
+jobs:
+  deploy_to_qa:
+    runs-on: ubuntu-latest
+    name: Buid and Deploy to Spring App to Prepaid-GPR QA env                
+    steps:
+      - name: Checkout Github Action
+        uses: actions/checkout@v2
+        
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: maven build, clean
+        run: |
+          mvn -s ./settings.xml clean package  
+
+      - name: Login via Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.QA_AZURE_CREDENTIALS }}
+          enable-AzPSSession: 'true' 
+          allow-no-subscriptions: 'true'
+
+      - name: deploy to QA with artifact
+        uses: azure/spring-cloud-deploy@v1
+        with:
+          azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}
+          action: Deploy
+          service-name: cloud-spring-qa-eastus2 
+          app-name: tokenization-service
+          use-staging-deployment: false
+          package: ${{ env.ASC_PACKAGE_PATH }}/**/*.jar 
