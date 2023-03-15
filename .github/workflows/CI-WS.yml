@@ -1,29 +1,29 @@
-name: Spring PetClinic CI
+name: Java CI
 
 on:
   push:
-    branches:
-      - feature/Kumar
+    branches: [ feature/Kumar]
   pull_request:
-    branches:
-      - feature/Kumar
+    branches: [ feature/Kumar ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source code
+    - name: Checkout code
       uses: actions/checkout@v2
-      
-    - name: Setup Java JDK
-      uses: actions/setup-java@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v1
       with:
         java-version: '11'
-        distribution: 'adopt'
-        
+
     - name: Build with Maven
-      run: mvn clean install -DskipTests=true
-      
-    - name: Run tests with Maven
-      run: mvn test
+      run: mvn package
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: petclinic
+        path: target/spring-petclinic-2.4.5.jar
