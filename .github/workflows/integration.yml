@@ -156,3 +156,39 @@ jobs:
           app-name: testing-github
           use-staging-deployment: false
           package: ${{ github.workspace }}/target/*.jar
+          name: Final Continuous Integration Pipeline for NCMC-DCMS-Shivalik Bank Project
+
+  create_release_tag:
+    name: Create Release Tag
+    needs: build_artifact
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Set Git User
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+      - name: Get Latest Git Tag
+        id: get_latest_tag
+        run: echo ::set-output name=tag::$(git describe --abbrev=0 --tags)
+      - name: Create Release Tag
+        id: create_tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const {data: latestRelease} = await github.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            const tag = "${{ steps.get_latest_tag.outputs.tag }}";
+            await github.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/" + tag,
+              sha: latestRelease.target_commitish
+            });
+             github-token: ${{ secrets.GITHUB_TOKEN }}
+
